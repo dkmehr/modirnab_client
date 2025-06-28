@@ -1,0 +1,38 @@
+.hero-user-profile {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  .wrapper-inpup-elements {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    .header {
+      font-size: 18px;
+      font-weight: 400;
+      height: 45px;
+    }
+  }
+
+  .wrapper-action {
+    flex-basis: 10%;
+    flex-shrink: 0;
+    gap: 10px;
+    display: flex;
+    align-items: start;
+    justify-content: end;
+    margin-top: 10px;
+  }
+}
+.rmdp-container {
+  width: 100% !important;
+  .rmdp-input {
+    width: 100% !important;
+    height: 56px !important;
+    background-color: unset;
+  }
+}
+
+.mt-3 {
+  margin-top: 20px;
+}

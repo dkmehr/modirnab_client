@@ -1,0 +1,69 @@
+.hero-notifications {
+  width: 100%;
+
+  //header
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    .title {
+      margin-bottom: 8px;
+      font-size: 19px;
+      font-weight: 600;
+    }
+    .sub-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+  }
+
+  //single card
+  &__card-single {
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 10px 10px #ddd;
+    padding: 15px;
+    display: flex;
+    height: 185px;
+    margin-bottom: 10px;
+
+    &__icon {
+      flex-basis: 5%;
+    }
+
+    &__content {
+      flex-grow: 1;
+      margin-right: 10px;
+      .title {
+        font-size: 14px;
+        font-weight: 600;
+        padding-bottom: 8px;
+      }
+      .detail-information {
+        text-align: justify;
+        line-height: 26px;
+        font-size: 13px;
+        margin-top: 5px;
+
+        .content {
+          height: 100px;
+          overflow: hidden;
+        }
+      }
+    }
+    .wrapper-action-more {
+      display: flex;
+      justify-content: end;
+      .show-more {
+        background-color: #0288d1;
+        color: #fff;
+        height: 29px;
+        width: 90px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+    }
+  }
+}

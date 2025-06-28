@@ -1,0 +1,77 @@
+@import url("./_fonts.scss");
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: IRANSansX !important;
+}
+
+html,
+body {
+  height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+body {
+  // font-family: IRANSansX !important;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+}
+
+.persian-number {
+  font-family: IRANSansNumber !important;
+}
+
+.font-iransans {
+  font-family: "IRANSansX" !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+//public button action
+.base-style {
+  color: #fff !important;
+  width: 100px !important;
+  border-radius: 6px !important;
+}
+.cancel {
+  background-color: #455a64 !important;
+}
+.accepted {
+  background-color: #4db6ac !important;
+}
+
+.error-validation {
+  text-align: right;
+  font-size: 12px;
+  padding-top: 8px;
+  color: red;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"] {
+  font-family: IRANSansNumber !important;
+}
+
+//global alert message
+.not-data {
+  justify-content: center !important;
+}

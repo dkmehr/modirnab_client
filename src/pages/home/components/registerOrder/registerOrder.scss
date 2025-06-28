@@ -1,0 +1,13 @@
+.register-order {
+  width: 100%;
+  height: inherit;
+
+  &__products {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+  }
+  &__product-list {
+    margin-top: 80px;
+  }
+}

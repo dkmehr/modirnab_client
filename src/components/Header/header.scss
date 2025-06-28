@@ -1,0 +1,97 @@
+.header {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  justify-content: space-between;
+  .icon-action {
+    width: 24px;
+    height: 24px;
+    color: #7a7a7a;
+  }
+
+  .action,
+  .company-logo {
+    gap: 10px;
+    display: flex;
+  }
+  .action {
+    position: relative;
+  }
+}
+
+.notification-badge {
+  .MuiBadge-badge {
+    left: 22px;
+    width: 24px;
+    height: 22px;
+    font-size: 11px;
+    font-family: IRANSansNumber !important;
+  }
+}
+.notification-list {
+  position: absolute !important;
+  left: 0 !important;
+  top: 40px !important;
+  background-color: #fff !important;
+  width: 360px;
+  height: 350px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  &__sub-header {
+    background-color: #0288d1 !important;
+    color: #fff !important;
+    border-radius: 5px 5px 0 0;
+    position: relative;
+    &::after {
+      content: " ";
+      position: absolute;
+      left: 34px;
+      top: -13px;
+      width: 0;
+      height: 0;
+      border-left: 13px solid transparent;
+      border-right: 13px solid transparent;
+      border-bottom: 13px solid #0288d1;
+    }
+  }
+
+  .wrapper-notification-status {
+    width: 50px;
+    display: inline-flex;
+    height: 65px;
+    align-items: center;
+
+    .notif-status {
+      font-size: 23px;
+      &.read {
+        color: #377da3;
+      }
+      &.unread {
+        color: #94a5af;
+      }
+    }
+  }
+}
+//dialog confirmation logout
+.dialog-confirmation-logout {
+  .base-style {
+    color: #fff;
+    width: 100px;
+    border-radius: 6px;
+  }
+  .confirm-message {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .wrapper-confirm-action {
+    align-items: center;
+    justify-content: center;
+    .cancel {
+      background-color: #455a64;
+    }
+    .accepted {
+      background-color: #4db6ac;
+    }
+  }
+}

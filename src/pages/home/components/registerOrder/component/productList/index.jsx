@@ -12,6 +12,8 @@ import {
   Snackbar,
   TextField,
   IconButton,
+  Divider,
+  Grid,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -33,13 +35,16 @@ import {
 } from "@services/basketService";
 import ConfirmRemoveProduct from "./component/confirmRemoveProduct";
 import localstorage from "@core/storageService";
-
+import TransportTable from "./component/transportTable";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const ProductList = ({ cart: propCart, cartDetail: propCartDetail }) => {
   const [products, setProducts] = useState({ cart: [] });
   const [cartDetail, setCartDetail] = useState({
     cartPrice: 0,
     cartDiscount: 0,
   });
+  const [CartTransPort, setCartTransPort] = useState();
+  const [UserDetails, setUserDetails] = useState();
   const [loading, setLoading] = useState(true);
   const [confirmRemove, setConfirmRemove] = useState(false);
   const [removeProductId, setRemoveProductId] = useState("");
@@ -47,12 +52,7 @@ const ProductList = ({ cart: propCart, cartDetail: propCartDetail }) => {
   const [editingProductId, setEditingProductId] = useState(null);
   const [selectedUser, setSelectedUser] = useState("");
   const [clearSelection, setClearSelection] = useState(false);
-  const openPayment = async () => {
-    // Redirect to payment page
-    window.location.href = `https://demofahaadmin.dkmehr.com/api/payment/zarin?id=${
-      localstorage.getUser()._id
-    }`;
-  };
+
   const getBasketList = useCallback(async () => {
     try {
       setLoading(true);
@@ -61,6 +61,8 @@ const ProductList = ({ cart: propCart, cartDetail: propCartDetail }) => {
       setCartDetail(
         response.data?.cartDetail || { cartPrice: 0, cartDiscount: 0 }
       );
+      setCartTransPort(response.data?.transportMethod);
+      setUserDetails(response.data?.customerDetails);
     } catch (error) {
       console.error("خطا در دریافت لیست سبد خرید:", error);
     } finally {
@@ -68,6 +70,11 @@ const ProductList = ({ cart: propCart, cartDetail: propCartDetail }) => {
     }
   }, []);
 
+  const openPayment = async () => {
+    // Redirect to payment page
+    window.location.href =
+      BASE_URL + `/payment/zarin?id=${localstorage.getUser()._id}`;
+  };
   useEffect(() => {
     if (!propCart || !propCartDetail) {
       getBasketList();
@@ -206,64 +213,143 @@ const ProductList = ({ cart: propCart, cartDetail: propCartDetail }) => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
+          flexDirection: { xs: "column-reverse", md: "row" },
           justifyContent: "space-between",
           padding: "20px",
+          paddingRight: "0",
           borderTop: "1px solid #ddd",
-          alignItems: "center",
+          alignItems: "flex-start",
           gap: 2,
         }}
       >
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
             gap: 2,
           }}
         >
-          {localstorage.getUser().business == true && (
-            <Button
-              disabled={!products.cart.length}
-              variant="outlined"
-              color="primary"
-              sx={{ fontSize: "12px", width: "150px" }}
-              onClick={handleBasketFactor}
+          <TransportTable
+            transport={CartTransPort}
+            user={UserDetails}
+            hasAddress={products.hasAddress}
+            onUpdate={getBasketList}
+          />
+          {localstorage.getUser().business == true || products.hasAddress ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: { md: "space-between", xs: "center" },
+                alignItems: "center",
+                gap: 2,
+                width: { xs: "100%", md: "unset" },
+              }}
             >
-              ثبت سفارش
-            </Button>
-          )}
-          <Button
-            disabled={!products.cart.length}
-            variant="outlined"
-            color="primary"
-            sx={{ fontSize: "12px", width: "150px" }}
-            onClick={openPayment}
-          >
-            پرداخت
-          </Button>
-          {localstorage.getUser()?.access === "customerAdmin" && (
-            <UserSelect
-              onSelect={handelSelectedUser}
-              clearSelection={clearSelection}
-              isActive={!products.cart.length}
-            />
+              {localstorage.getUser()?.access === "customerAdmin" && (
+                <UserSelect
+                  onSelect={handelSelectedUser}
+                  clearSelection={clearSelection}
+                  isActive={!products.cart.length}
+                />
+              )}
+              {localstorage.getUser().business == true && (
+                <Button
+                  disabled={!products.cart.length}
+                  variant="outlined"
+                  color="primary"
+                  sx={{ fontSize: "12px", width: "150px" }}
+                  onClick={handleBasketFactor}
+                >
+                  ثبت سفارش
+                </Button>
+              )}
+              <Button
+                disabled={!products.cart.length}
+                variant="outlined"
+                color="primary"
+                sx={{ fontSize: "12px", width: "150px" }}
+                onClick={openPayment}
+              >
+                پرداخت
+              </Button>
+
+              {localstorage.getUser()?.access === "customerAdmin" && (
+                <UserSelect
+                  onSelect={handelSelectedUser}
+                  clearSelection={clearSelection}
+                  isActive={!products.cart.length}
+                />
+              )}
+            </Box>
+          ) : (
+            <Typography sx={{ color: "red" }}>
+              لطفا آدرس خود را وارد کنید!
+            </Typography>
           )}
         </Box>
-
         <Box
           sx={{
             display: "flex",
-            alignItems: "center",
+            flexDirection: "column",
+            alignItems: "flex-start",
             gap: "10px",
+            width: { xs: "100%", md: "unset" },
           }}
         >
-          <Typography className="persian-number">
-            مجموع قیمت: {moneyFormater(cartDetail.cartPrice)}
-          </Typography>
-          <Typography className="persian-number">
-            تخفیف: {moneyFormater(cartDetail.cartDiscount)}
-          </Typography>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell align="center">
+                    <Typography className="persian-number">
+                      مجموع قیمت
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography className="persian-number">
+                      {moneyFormater(cartDetail.cartPrice)}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="center">
+                    <Typography className="persian-number">تخفیف</Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography className="persian-number">
+                      {moneyFormater(cartDetail.cartDiscount)}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="center">
+                    <Typography className="persian-number">
+                      هزینه ارسال
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography className="persian-number">
+                      {moneyFormater(cartDetail.transportPrice)}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="center">
+                    <Typography className="persian-number">
+                      مجموع فاکتور
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography className="persian-number">
+                      {moneyFormater(cartDetail.fullPrice)}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Box>
       </Box>
 

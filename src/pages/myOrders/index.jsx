@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,7 +42,7 @@ const MyOrders = () => {
   }, []);
   const openPayment = async (faktorNum) => {
     // Redirect to payment page
-    window.location.href = `https://demofahaadmin.dkmehr.com/api/payment/zarin?faktorNo=${faktorNum}`;
+    window.location.href = BASE_URL + `/payment/zarin?faktorNo=${faktorNum}`;
   };
   const toggleDetails = (id) => {
     setOpenDetails((prev) => ({ ...prev, [id]: !prev[id] }));

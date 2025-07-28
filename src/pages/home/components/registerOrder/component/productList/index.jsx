@@ -47,7 +47,12 @@ const ProductList = ({ cart: propCart, cartDetail: propCartDetail }) => {
   const [editingProductId, setEditingProductId] = useState(null);
   const [selectedUser, setSelectedUser] = useState("");
   const [clearSelection, setClearSelection] = useState(false);
-
+  const openPayment = async () => {
+    // Redirect to payment page
+    window.location.href = `https://demofahaadmin.dkmehr.com/api/payment/zarin?id=${
+      localstorage.getUser()._id
+    }`;
+  };
   const getBasketList = useCallback(async () => {
     try {
       setLoading(true);
@@ -153,7 +158,7 @@ const ProductList = ({ cart: propCart, cartDetail: propCartDetail }) => {
       </Typography>
     );
   }
-
+  // console.log(localstorage.getUser().business);
   return (
     <>
       <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
@@ -217,14 +222,25 @@ const ProductList = ({ cart: propCart, cartDetail: propCartDetail }) => {
             gap: 2,
           }}
         >
+          {localstorage.getUser().business == true && (
+            <Button
+              disabled={!products.cart.length}
+              variant="outlined"
+              color="primary"
+              sx={{ fontSize: "12px", width: "150px" }}
+              onClick={handleBasketFactor}
+            >
+              ثبت سفارش
+            </Button>
+          )}
           <Button
             disabled={!products.cart.length}
             variant="outlined"
             color="primary"
             sx={{ fontSize: "12px", width: "150px" }}
-            onClick={handleBasketFactor}
+            onClick={openPayment}
           >
-            ثبت سفارش
+            پرداخت
           </Button>
           {localstorage.getUser()?.access === "customerAdmin" && (
             <UserSelect

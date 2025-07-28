@@ -22,7 +22,7 @@ const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [openDetails, setOpenDetails] = useState({}); 
+  const [openDetails, setOpenDetails] = useState({});
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -40,7 +40,10 @@ const MyOrders = () => {
 
     fetchOrders();
   }, []);
-
+  const openPayment = async (faktorNum) => {
+    // Redirect to payment page
+    window.location.href = `https://demofahaadmin.dkmehr.com/api/payment/zarin?faktorNo=${faktorNum}`;
+  };
   const toggleDetails = (id) => {
     setOpenDetails((prev) => ({ ...prev, [id]: !prev[id] }));
   };
@@ -93,9 +96,12 @@ const MyOrders = () => {
                   "&:hover": { boxShadow: 6 },
                 }}
               >
-                <CardContent sx={{position:"relative"}}>
-                  <Chip label={order.faStatus} sx={{position:'absolute',right:'10px',top:'10px'}} />
-                  <Typography  color="primary">
+                <CardContent sx={{ position: "relative" }}>
+                  <Chip
+                    label={order.faStatus}
+                    sx={{ position: "absolute", right: "10px", top: "10px" }}
+                  />
+                  <Typography color="primary">
                     📜 شماره فاکتور: {order.faktorNo}
                   </Typography>
                   <Typography variant="body1" sx={{ mt: 1 }}>
@@ -116,7 +122,12 @@ const MyOrders = () => {
                   </Typography>
 
                   <Box
-                    sx={{ display: "flex", justifyContent: "center", mt: 2 }}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      mt: 2,
+                      gap: 1,
+                    }}
                   >
                     <Button
                       variant="contained"
@@ -132,6 +143,15 @@ const MyOrders = () => {
                     >
                       {openDetails[order._id] ? "بستن جزئیات" : "نمایش جزئیات"}
                     </Button>
+                    {order.waitPay == true && (
+                      <Button
+                        variant="contained"
+                        color="success"
+                        onClick={() => openPayment(order.faktorNo)}
+                      >
+                        پرداخت
+                      </Button>
+                    )}
                   </Box>
 
                   <Collapse

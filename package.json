@@ -39,7 +39,8 @@
     "styled-components": "^6.1.12",
     "stylis": "^4.3.2",
     "stylis-plugin-rtl": "^2.1.1",
-    "swiper": "^11.2.2"
+    "swiper": "^11.2.2",
+    "register-service-worker": "^1.7.2"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.32.1",

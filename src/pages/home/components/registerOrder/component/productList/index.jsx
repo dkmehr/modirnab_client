@@ -37,7 +37,11 @@ import ConfirmRemoveProduct from "./component/confirmRemoveProduct";
 import localstorage from "@core/storageService";
 import TransportTable from "./component/transportTable";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-const ProductList = ({ cart: propCart, cartDetail: propCartDetail }) => {
+const ProductList = ({
+  cart: propCart,
+  cartDetail: propCartDetail,
+  cartAddress,
+}) => {
   const [products, setProducts] = useState({ cart: [] });
   const [cartDetail, setCartDetail] = useState({
     cartPrice: 0,
@@ -79,7 +83,7 @@ const ProductList = ({ cart: propCart, cartDetail: propCartDetail }) => {
     if (!propCart || !propCartDetail) {
       getBasketList();
     } else {
-      setProducts({ cart: propCart });
+      setProducts({ cart: propCart, hasAddress: cartAddress });
       setCartDetail(propCartDetail);
       setLoading(false);
     }
@@ -155,7 +159,7 @@ const ProductList = ({ cart: propCart, cartDetail: propCartDetail }) => {
       });
     }
   };
-
+  console.log(products);
   if (loading) {
     return (
       <Typography

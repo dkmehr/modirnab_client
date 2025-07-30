@@ -60,10 +60,11 @@ const RegisterOrder = () => {
     try {
       await setSingleProduct({});
       const response = await addToBasket(product);
-      const { cart, cartDetail } = response.data;
+      const { cart, cartDetail, hasAddress } = response.data;
       setBasket({
         cart,
         cartDetail,
+        hasAddress,
       });
       await setSingleProduct({});
     } catch (error) {
@@ -121,7 +122,11 @@ const RegisterOrder = () => {
         filterSelected={handelChangeFilterGetNewInfo}
       />
       <Divider sx={{ my: 2 }} />
-      <ProductList cart={basket.cart} cartDetail={basket.cartDetail} />
+      <ProductList
+        cart={basket.cart}
+        cartDetail={basket.cartDetail}
+        cartAddress={basket.hasAddress}
+      />
     </section>
   );
 };

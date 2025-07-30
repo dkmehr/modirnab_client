@@ -124,6 +124,9 @@ const MyOrders = () => {
                   <Box
                     sx={{
                       display: "flex",
+                      flexDirection: !order.hasAddress
+                        ? "column-reverse"
+                        : "row",
                       justifyContent: "center",
                       mt: 2,
                       gap: 1,
@@ -143,7 +146,7 @@ const MyOrders = () => {
                     >
                       {openDetails[order._id] ? "بستن جزئیات" : "نمایش جزئیات"}
                     </Button>
-                    {order.waitPay == true && (
+                    {order.waitPay == true && order.hasAddress ? (
                       <Button
                         variant="contained"
                         color="success"
@@ -151,6 +154,16 @@ const MyOrders = () => {
                       >
                         پرداخت
                       </Button>
+                    ) : (
+                      <Typography
+                        sx={{
+                          fontSize: ".7rem",
+                          color: "red",
+                          textAlign: "center",
+                        }}
+                      >
+                        برای پرداخت اطلاعات خود را تکمیل کنید
+                      </Typography>
                     )}
                   </Box>
 

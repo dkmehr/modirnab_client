@@ -229,6 +229,7 @@ const ProductList = ({ cart: propCart, cartDetail: propCartDetail }) => {
             justifyContent: "flex-start",
             alignItems: "flex-start",
             gap: 2,
+            width: { xs: "100%", md: "60%" },
           }}
         >
           <TransportTable
@@ -275,17 +276,17 @@ const ProductList = ({ cart: propCart, cartDetail: propCartDetail }) => {
                 پرداخت
               </Button>
 
-              {localstorage.getUser()?.access === "customerAdmin" && (
+              {/* {localstorage.getUser()?.access === "customerAdmin" && (
                 <UserSelect
                   onSelect={handelSelectedUser}
                   clearSelection={clearSelection}
                   isActive={!products.cart.length}
                 />
-              )}
+              )} */}
             </Box>
           ) : (
             <Typography sx={{ color: "red" }}>
-              لطفا آدرس خود را وارد کنید!
+              لطفا اطلاعات خود را وارد کنید!
             </Typography>
           )}
         </Box>

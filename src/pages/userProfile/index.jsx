@@ -15,6 +15,7 @@ import {
   FormControl,
 } from "@mui/material";
 import { getStateList, getCityList } from "@/services/globalService.js";
+import { ElevenMpTwoTone } from "@mui/icons-material";
 
 const fieldsToShow = {
   cName: "نام",
@@ -25,8 +26,8 @@ const fieldsToShow = {
   postalCode: "کد پستی",
   phone: "شماره تلفن",
   email: "ایمیل",
-  state: "استان",
-  city: "شهر",
+  stateId: "استان",
+  cityId: "شهر",
 };
 
 const UserProfile = () => {
@@ -58,8 +59,8 @@ const UserProfile = () => {
     setUserData(data);
     setEditedData(data);
     fetchStates().then(() => {
-      if (data.state) {
-        fetchCities(data.state);
+      if (data.stateId) {
+        fetchCities(data.stateId);
       }
     });
   }, []);
@@ -94,13 +95,22 @@ const UserProfile = () => {
       console.log("error :>> ", error);
     }
   };
-
+  const getStateWithStateId = (stateID) => {
+    return states.filter((el) => el.stateId === stateID)[0];
+  };
+  const getCityWithStateId = (cityID) => {
+    return cities.filter((el) => el.cityId === cityID)[0];
+  };
   const handleStateChange = async (event) => {
     try {
-      const stateId = event.target.value;
+      const stateIdSelected = event.target.value;
+      let { stateId, stateName } = getStateWithStateId(
+        stateIdSelected.toString()
+      );
       setEditedData((prev) => ({
         ...prev,
-        state: stateId,
+        stateId: stateId,
+        state: stateName,
         city: "",
       }));
       setHasChanges(true);
@@ -111,9 +121,12 @@ const UserProfile = () => {
   };
 
   const handleCityChange = (event) => {
+    const cityIdSelected = event.target.value;
+    let { cityId, cityName } = getCityWithStateId(cityIdSelected.toString());
     setEditedData((prev) => ({
       ...prev,
-      city: event.target.value,
+      city: cityName,
+      cityId: cityId,
     }));
     setHasChanges(true);
   };
@@ -167,7 +180,7 @@ const UserProfile = () => {
             <FormControl fullWidth size="small">
               <InputLabel>استان</InputLabel>
               <Select
-                value={editedData.state || ""}
+                value={editedData.stateId || ""}
                 onChange={handleStateChange}
               >
                 {states.map((state) => (
@@ -184,7 +197,7 @@ const UserProfile = () => {
               <FormControl fullWidth size="small">
                 <InputLabel>شهر</InputLabel>
                 <Select
-                  value={editedData.city || ""}
+                  value={editedData.cityId || ""}
                   onChange={handleCityChange}
                 >
                   {cities.map((city) => (

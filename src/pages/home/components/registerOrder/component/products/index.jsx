@@ -8,7 +8,7 @@ import {
   Button,
   Box,
 } from "@mui/material";
-
+import { moneyFormater } from "@libs/utils/money";
 const BASE_URL = import.meta.env.VITE_URL;
 
 const Products = ({ list, productSelected }) => {
@@ -33,7 +33,7 @@ const Products = ({ list, productSelected }) => {
           <Card
             key={product._id}
             sx={{
-              width: 250, 
+              width: 250,
               height: 320,
               flexShrink: 0,
               display: "flex",
@@ -61,9 +61,18 @@ const Products = ({ list, productSelected }) => {
                 textAlign: "center",
               }}
             >
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                {product.title}
-              </Typography>
+              <Box>
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  {product.title}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  className="persian-number"
+                  sx={{ color: "text.secondary" }}
+                >
+                  {moneyFormater(product.sellPrice)}
+                </Typography>
+              </Box>
             </CardContent>
             <CardActions sx={{ justifyContent: "center", paddingBottom: 2 }}>
               <Button

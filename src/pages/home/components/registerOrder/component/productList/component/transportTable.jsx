@@ -162,7 +162,8 @@ const TransportTable = (props) => {
               هزینه ارسال: {moneyFormater(transport[0].transportPrice)}
             </Typography>
           </Grid>
-
+        </Grid>
+        <Grid container spacing={2}>
           {["cName", "sName"].map((key) => (
             <Grid item xs={12} sm={6} key={key}>
               <TextField

@@ -20,11 +20,10 @@ import { ElevenMpTwoTone } from "@mui/icons-material";
 const fieldsToShow = {
   cName: "نام",
   sName: "نام خانوادگی",
-  mobile: "شماره موبایل",
   Address: "آدرس",
   meliCode: "کد ملی",
   postalCode: "کد پستی",
-  phone: "شماره تلفن",
+  phone: "شماره موبایل",
   email: "ایمیل",
   stateId: "استان",
   cityId: "شهر",
@@ -150,16 +149,7 @@ const UserProfile = () => {
     <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
       <Paper sx={{ p: 3, width: { xs: "90%", md: "90%" }, boxShadow: 3 }}>
         <Grid container spacing={2}>
-          {[
-            "cName",
-            "sName",
-            "mobile",
-            "Address",
-            "meliCode",
-            "postalCode",
-            "phone",
-            "email",
-          ].map((key) => (
+          {["cName", "sName", "meliCode", "phone", "email"].map((key) => (
             <Grid item xs={12} sm={6} key={key}>
               <TextField
                 fullWidth
@@ -170,7 +160,7 @@ const UserProfile = () => {
                 variant="outlined"
                 size="small"
                 InputProps={{
-                  readOnly: key === "phone" || key === "mobile",
+                  readOnly: key === "mobile",
                 }}
               />
             </Grid>
@@ -209,8 +199,23 @@ const UserProfile = () => {
               </FormControl>
             </Grid>
           )}
+          {["Address", "postalCode"].map((key) => (
+            <Grid item xs={12} sm={6} key={key}>
+              <TextField
+                fullWidth
+                label={fieldsToShow[key]}
+                name={key}
+                value={editedData[key] || ""}
+                onChange={handleChange}
+                variant="outlined"
+                size="small"
+                InputProps={{
+                  readOnly: key === "mobile",
+                }}
+              />
+            </Grid>
+          ))}
         </Grid>
-
         {/* دکمه ذخیره تغییرات */}
         {hasChanges && (
           <Box sx={{ textAlign: "center", mt: 3 }}>

@@ -167,8 +167,8 @@ const SelectedProduct = ({ productInfo, productToBasket, filterSelected }) => {
           >
             <img
               className="product-image"
-              src={BASE_URL + productData.imageUrl}
-              alt={productData.title}
+              src={BASE_URL + mainProduct.imageUrl}
+              alt={mainProduct.title}
               style={{ maxWidth: "100%", height: "auto" }}
             />
           </Box>
@@ -185,7 +185,7 @@ const SelectedProduct = ({ productInfo, productToBasket, filterSelected }) => {
               {/* {mainProduct.nodeName} */}
             </Typography>
             <Typography className="prop_child persian-number">
-              قیمت: {moneyFormater(productData.sellPrice)}
+              قیمت: {moneyFormater(mainProduct.sellPrice)}
             </Typography>
           </Box>
         </Box>
